@@ -2,7 +2,7 @@
 ## RB101 - Programming Foundations
 
 
-
+READ ME FIRST: Some are my own notes but most parts in this notes are copy-paste of lessons from launch school. I'm just putting them here for easy access in case I want to go back to the lessons later on. <br>
 ### Ruby Style 
 ```
 # Naming a file
@@ -50,9 +50,10 @@ end
 Link for more info about Ruby Styling:
 [Ruby Style Guide](https://github.com/rubocop-hq/ruby-style-guide)
 
-### Lesson 2
+### Lesson 2: Small Programs
 
 
+#### Walk-Through: Calculator
 In lesson 2 (calculator.rb) - we used method "inspect" for inspecting data in Ruby. It returns a string representation of the object.<br>
 Here's the code:
 ```
@@ -79,4 +80,78 @@ As we see, something is wrong with the code because the "!" is printed on the ne
 # perform the chomp method on the user input
 number1 = Kernel.gets().chomp()
 ```
+
+#### Pseudo-Code
+Example of Pseudo-Code: 
+```
+Given a collection of integers.
+
+Iterate through the collection one by one.
+  - save the first value as the starting value.
+  - for each iteration, compare the saved value with the current value.
+  - if the saved value is greater, or it's the same
+    - move to the next value in the collection
+  - otherwise, if the current value is greater
+    - reassign the saved value as the current value
+
+After iterating through the collection, return the saved value.
+```
+Formalizing pseudo-code a little bit more:
+
+| keyword | meaning |
+|---|---|
+| START | start of the program |
+| SET | sets a variable we can use for later |
+| GET | retrieve input from user |
+| PRINT | displays output to user |
+| READ | retrieve value from variable |
+| IF / ELSE IF / ELSE | show conditional branches in logic |
+| WHILE | show looping logic |
+| END | end of the program |
+|
+
+Translating the sample pseudo-code to a formal pseudo-code:
+```
+START
+
+# Given a collection of integers called "numbers"
+
+SET iterator = 1
+SET saved_number = value within numbers collection at space 1
+
+WHILE iterator <= length of numbers
+  SET current_number = value within numbers collection at space "iterator"
+  IF saved_number >= current_number
+    go to the next iteration
+  ELSE
+    saved_number = current_number
+
+  iterator = iterator + 1
+
+PRINT saved_number
+
+END
+```
+Translating Pseudo-Code to Program Code
+```
+def find_greatest(numbers)
+  saved_number = nil
+
+  numbers.each do |num|
+    saved_number ||= num  # assign to first value
+    if saved_number >= num
+      next
+    else
+      saved_number = num
+    end
+  end
+
+  saved_number
+end
+```
+
+
+
+
+
 
