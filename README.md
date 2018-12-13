@@ -9,3 +9,4 @@ lesson_2
 ---pseudo_code.md  
 notes.md  
 .gitignore
+.rubocop.yml
