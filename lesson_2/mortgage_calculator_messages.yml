@@ -1,0 +1,13 @@
+en:
+  welcome: "Welcome to Mortgage Calculator!"
+  amount: "Enter the loan amount:"
+  apr: "Enter the annual percentage rate (APR):"
+  duration_years: "Enter the loan duration in years:"
+  invalid_amount: "That's not a valid loan amount (only numbers greater than 0 are allowed)."
+  invalid_apr: "That's not a valid annual percentage rate (only numbers greater than 0 are allowed)."
+  invalid_duration: "Invalid answer. (only numbers greater than 0 are allowed)."
+  calculate_again: "Do you want to perform another calculation? (Y to calculate again)"
+es:
+  welcome: "Bienvenido a la calculadora! Entre su nombre:"
+  valid_name: "Asegúrese de entrar un nombre válido."
+
