@@ -151,7 +151,22 @@ end
 ```
 
 
+### Lesson 3
 
+#### Looping
+Four bacis elements of loop
+  a loop
+  a counter
+  a way to retrieve the current value
+  a way to exit the loop.
+
+#### Intro to PEDAC Process
+
+P - Understand the Problem
+E - Examples / Test Cases
+D - Data Structure
+A - Algorithm
+C - Code
 
 
 
