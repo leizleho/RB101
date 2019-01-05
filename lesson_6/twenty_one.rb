@@ -1,5 +1,5 @@
-SUITS = %w(H D C S)
-FACES = %w(2 3 4 5 6 7 8 9 10 J Q K A)
+SUITS = ['H', 'D', 'C', 'S']
+FACES = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 
 def initialize_deck
   SUITS.product(FACES).shuffle
@@ -10,13 +10,13 @@ def get_value(cards)
   total = 0
 
   values.each do |val|
-    if val.to_i > 0
-      total += val.to_i
-    elsif ['J','K','Q'].include?(val)
-      total += 10
-    elsif val == 'A'
-      total + 11 <= 21 ? total+=11 : total+=1
-    end
+    total += if val.to_i > 0
+               val.to_i
+             elsif ['J', 'K', 'Q'].include?(val)
+               10
+             elsif val == 'A'
+               total + 11 <= 21 ? 11 : 1
+             end
   end
 
   total
@@ -47,9 +47,9 @@ def display_winner(dealer_cards, player_cards)
   winner = get_winner(dealer_cards, player_cards)
 
   case winner
-  when 'player_busted' 
+  when 'player_busted'
     puts "You busted! Dealer wins!"
-  when 'dealer_busted' 
+  when 'dealer_busted'
     puts "Dealer busted! You win!"
   when 'player'
     puts "You win!"
@@ -60,31 +60,31 @@ def display_winner(dealer_cards, player_cards)
   end
 end
 
-def player_turn(cards,deck)
+# rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+def player_turn(cards, deck)
   puts "\nYour turn.."
   loop do
     answer = nil
-    puts "\nhit or stay?"
-    answer = gets.chomp.downcase
+    loop do
+      puts "\nhit or stay?"
+      answer = gets.chomp.downcase
+      break if ['h', 'hit', 's', 'stay'].include?(answer)
+      puts "Invalid answer!"
+    end
 
-    puts "Invalid answer!" if !['h','hit','s','stay'].include?(answer)
-    if ['h','hit'].include?(answer)
+    if ['h', 'hit'].include?(answer)
       cards << deck.shift
       puts "You chose to hit!"
       puts "Your cards are now: #{cards}"
       puts "Your total is now: #{get_value(cards)}"
     end
 
-    if ['s','stay'].include?(answer)
-      puts "You stayed at #{get_value(cards)}\n"
-      break
-    end
-
-    break if busted?(cards)
+    break if ['s', 'stay'].include?(answer) || busted?(cards)
   end
 end
+# rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
-def dealer_turn(cards,deck)
+def dealer_turn(cards, deck)
   loop do
     break if get_value(cards) >= 17
     puts "\nDealer hits.."
@@ -101,7 +101,7 @@ def play_again?
 end
 
 # Game start here
-loop do 
+loop do
   system('clear') || system('cls')
   deck = initialize_deck
 
@@ -115,25 +115,30 @@ loop do
 
   # Display initial cards
   puts "Dealer has #{dealer_cards[0]} and ?"
-  puts "You have: #{player_cards[0]} and #{player_cards[1]}, with total value of #{get_value(player_cards)}."
+  puts "You have: #{player_cards[0]} and #{player_cards[1]}"
+  puts "You hava a total value of #{get_value(player_cards)}."
 
   # player's turn
-  player_turn(player_cards,deck)
+  player_turn(player_cards, deck)
   if busted?(player_cards)
     display_winner(dealer_cards, player_cards)
     play_again? ? next : break
+  else
+    puts "You stayed at #{get_value(player_cards)}\n"
   end
 
   # dealer's turn
-  dealer_turn(dealer_cards,deck)
+  dealer_turn(dealer_cards, deck)
   if busted?(dealer_cards)
     display_winner(dealer_cards, player_cards)
     play_again? ? next : break
   end
 
   # both player and dealer stays - compare cards!
-  puts "\nDealer has #{dealer_cards}, for a total of: #{get_value(dealer_cards)}"
-  puts "You have #{player_cards}, for a total of: #{get_value(player_cards)}"
+  puts "\nDealer has #{dealer_cards}"
+  puts "Dealer cards is: #{get_value(dealer_cards)}"
+  puts "\nYou have #{player_cards}"
+  puts "You have a total of: #{get_value(player_cards)}"
 
   display_winner(dealer_cards, player_cards)
 
@@ -141,4 +146,3 @@ loop do
 end
 
 puts "Thank you for playing Twenty-One! Good bye!"
-
