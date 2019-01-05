@@ -1,5 +1,7 @@
 SUITS = ['H', 'D', 'C', 'S']
 FACES = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+MAX_CARD_VALUE = 21
+DEALER_HIT_STOP = 17
 
 def initialize_deck
   SUITS.product(FACES).shuffle
@@ -15,7 +17,7 @@ def get_value(cards)
              elsif ['J', 'K', 'Q'].include?(val)
                10
              elsif val == 'A'
-               total + 11 <= 21 ? 11 : 1
+               total + 11 <= MAX_CARD_VALUE ? 11 : 1
              end
   end
 
@@ -23,16 +25,16 @@ def get_value(cards)
 end
 
 def busted?(cards)
-  get_value(cards) > 21
+  get_value(cards) > MAX_CARD_VALUE
 end
 
 def get_winner(dealer_cards, player_cards)
   player_value = get_value(player_cards)
   dealer_value = get_value(dealer_cards)
 
-  if player_value > 21
+  if player_value > MAX_CARD_VALUE
     'player_busted'
-  elsif dealer_value > 21
+  elsif dealer_value > MAX_CARD_VALUE
     'dealer_busted'
   elsif player_value > dealer_value
     'player'
@@ -86,7 +88,7 @@ end
 
 def dealer_turn(cards, deck)
   loop do
-    break if get_value(cards) >= 17
+    break if get_value(cards) >= DEALER_HIT_STOP
     puts "\nDealer hits.."
     cards << deck.shift
     puts "Dealer cards are now: #{cards}"
